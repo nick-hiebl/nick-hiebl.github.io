@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, type CSSProperties } from 'react'
 
 import { getDailyConfig, type GameConfig } from './randomisation'
 
@@ -52,6 +52,12 @@ const rateDistance = (value: number, target: number): Rating => {
     }
 }
 
+const createCopyText = (guesses: Rating[]): string => {
+    return `#Longie #${dayNumber} ${guesses.length}/${MAX_GUESSES}
+${guesses.map(guess => guess.direction).join('')}
+https://site.jumpoy.com/games/longie/`
+}
+
 const drawCanvas = (canvas: HTMLCanvasElement | null, config: GameConfig) => {
     if (!canvas) {
         return
@@ -99,7 +105,49 @@ const currentDate = new Date()
 
 const dayNumber = Math.floor((currentDate.valueOf() - FIRST_DATE.valueOf()) / DAY_MILLISECONDS) + 1
 
+const CONFETTI_ARRANGEMENT = new Array(10).fill(0)
+    .map(() => {
+        const angle = Math.random() * 2 * Math.PI
+        const radius = Math.random() * 32 + 16
+
+        return {
+            x: Math.sin(angle) * radius,
+            y: Math.cos(angle) * radius,
+        }
+    })
+
+const ConfettiBlast = () => (
+    <div id="confetti-target">
+        {CONFETTI_ARRANGEMENT.map((pos, index) => (
+            <div
+                key={index}
+                className="confetti"
+                style={{ '--target-x': `${pos.x}px`, '--target-y': `${pos.y}px` } as CSSProperties}
+            >
+                🎉
+            </div>
+        ))}
+    </div>
+)
+
+const PostGuessList = ({ guesses }: { guesses: Rating[] }) => (
+    <ul className="post-guess-list">
+        {guesses.map((guess, index) => (
+            <li key={index} style={{ position: 'relative' }}>
+                {guess.direction === '🎉' && <ConfettiBlast />}
+                <div
+                    className="post-guess"
+                    style={{ animationDelay: `${index * 120}ms` }}
+                >
+                    {guess.direction}
+                </div>
+            </li>
+        ))}
+    </ul>
+)
+
 export const Game = () => {
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
     const [inputText, setInputText] = useState('')
     const [config] = useState(getDailyConfig(new Date()))
     const [isDone, setDone] = useState(false)
@@ -134,25 +182,20 @@ export const Game = () => {
                 <div className="block">
                     <h2>You got it!</h2>
                     <div>Your guesses: {guesses.length} / {MAX_GUESSES}</div>
-                    <ul className="post-guess-list">
-                        {guesses.map((guess, index) => (
-                            <li
-                                key={index}
-                                className="post-guess"
-                                style={{ animationDelay: `${index * 120}ms` }}
-                            >
-                                {guess.direction}
-                            </li>
-                        ))}
-                    </ul>
+                    <PostGuessList guesses={guesses} />
                     <button
                         onClick={() => {
                             setCopies(c => c + 1)
-                            const outputText = `#Longie #${dayNumber} ${guesses.length}/${MAX_GUESSES}
-${guesses.map(guess => guess.direction).join('')}
-https://site.jumpoy.com/games/longie/`
 
-                            navigator.clipboard.writeText(outputText)
+                            navigator.clipboard.writeText(createCopyText(guesses))
+
+                            if (timeoutRef.current) {
+                                clearTimeout(timeoutRef.current)
+                            }
+
+                            timeoutRef.current = setTimeout(() => {
+                                setCopies(0)
+                            }, 1000)
                         }}
                     >
                         {copies > 0 ? 'Copied' + '!'.repeat(copies) : 'Copy'}

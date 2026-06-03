@@ -79,3 +79,32 @@ canvas {
     80% { transform: rotate(15deg); opacity: 100%; }
     100% { transform: rotate(0deg); opacity: 100%; }
 }
+
+#confetti-target {
+    position: relative;
+    width: 0px;
+    height: 0px;
+}
+
+@keyframes mover {
+    0% {
+        transform: translate(0px, 0px);
+        opacity: 100%;
+    }
+
+    70% {
+        opacity: 30%;
+    }
+
+    100% {
+        transform: translate(var(--target-x), var(--target-y));
+        opacity: 0%;
+        display: none;
+    }
+}
+
+.confetti {
+    position: absolute;
+    transform: translate(var(--target-x), var(--target-y));
+    animation: mover 1s ease-out forwards;
+}
