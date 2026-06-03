@@ -10,6 +10,9 @@ import react from '@astrojs/react'
 export default defineConfig({
     site: 'http://site.jumpoy.com',
     integrations: [mdx(), sitemap(), react()],
+    build: {
+        assets: 'assets',
+    },
     fonts: [
         {
             provider: fontProviders.local(),
