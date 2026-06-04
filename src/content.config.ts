@@ -18,4 +18,16 @@ const blog = defineCollection({
 		}),
 })
 
-export const collections = { blog }
+const games = defineCollection({
+	loader: glob({ base: './src/content/games', pattern: '**/*.{md,mdx}' }),
+	schema: () =>
+		z.object({
+			title: z.string(),
+			description: z.string(),
+			gameId: z.string(),
+			pubDate: z.coerce.date(),
+			unlisted: z.optional(z.boolean()),
+		}),
+})
+
+export const collections = { blog, games }

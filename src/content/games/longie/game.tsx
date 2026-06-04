@@ -1,6 +1,6 @@
 import { useRef, useState, type CSSProperties } from 'react'
 
-import { getDailyConfig, type GameConfig } from './randomisation'
+import { getDailyConfig, type GameConfig } from './randomisation.ts'
 
 import './style.css'
 
@@ -208,9 +208,9 @@ export const Game = () => {
                 height="200"
                 ref={canvas => drawCanvas(canvas, config)}
             />
-            <div>The white reference line above is 100 pixels long.</div>
+            <div>The black reference line above is 100 pixels long.</div>
             <div className="flex-row">
-                Guess the length in pixels:
+                Guess the length of the orange bar in pixels:
                 <input
                     type="text"
                     name="longie-guess"
