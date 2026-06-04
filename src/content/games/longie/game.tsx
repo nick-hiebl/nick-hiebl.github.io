@@ -205,7 +205,7 @@ export const Game = () => {
             <canvas
                 id="canvas"
                 width="250"
-                height="200"
+                height="120"
                 ref={canvas => drawCanvas(canvas, config)}
             />
             <div>The black reference line above is 100 pixels long.</div>
