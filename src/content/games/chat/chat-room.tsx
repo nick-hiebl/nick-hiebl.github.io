@@ -7,7 +7,7 @@ const useSocket = () => {
     const [socket, setSocket] = useState<Socket>()
 
     useEffect(() => {
-        setSocket(io('https://api.nick-h.net'))
+        setSocket(io('https://api.nick-h.net', { query: { name: 'Nick2' }}))
     }, [])
 
     return socket
@@ -19,9 +19,11 @@ type Message = {
     author: string
 }
 
-const MessageComponent = ({ author, message, timestamp }: Message) => {
+type LocalMessage = Message & { isError?: boolean }
+
+const MessageComponent = ({ author, message, timestamp, isError = false }: LocalMessage) => {
     return (
-        <li>
+        <li className="message" data-error={isError}>
             <span>[{new Date(timestamp).toLocaleTimeString('en-UK', { timeStyle: 'short' })}]</span>
             {' '}
             <span>&lt;@{author.slice(0, 40)}&gt;</span>
@@ -36,7 +38,7 @@ export const ChatRoom = () => {
     const chatWindow = useRef<HTMLElement | null>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
 
-    const [messages, setMessages] = useState<Message[]>([])
+    const [messages, setMessages] = useState<LocalMessage[]>([])
     const [input, setInput] = useState('')
 
     useEffect(() => {
@@ -54,15 +56,43 @@ export const ChatRoom = () => {
             return
         }
 
+        const addMessages = (messages: LocalMessage[]) => {
+            setMessages(current => current.concat(messages))
+        }
+
         const onSendMessages = (args: { messages: Message[]; initial?: boolean }) => {
             if (args.initial) {
-                setMessages(args.messages)
+                setMessages(current => {
+                    const messages = current.filter(c => c.isError).concat(args.messages)
+
+                    messages.sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp))
+
+                    return messages
+                })
             } else {
-                setMessages(current => current.concat(args.messages))
+                addMessages(args.messages)
             }
         }
 
         socket.on('send-messages', onSendMessages)
+
+        socket.on('disconnect', () => {
+            addMessages([{
+                timestamp: new Date().toISOString(),
+                author: 'Server',
+                message: 'You have disconnected',
+                isError: true,
+            }])
+        })
+
+        socket.on('connect', () => {
+            addMessages([{
+                timestamp: new Date().toISOString(),
+                author: 'Server',
+                message: 'You have connected',
+                isError: true,
+            }])
+        })
 
         return () => {
             socket.off('send-messages', onSendMessages)
