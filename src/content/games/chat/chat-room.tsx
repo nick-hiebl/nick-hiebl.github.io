@@ -140,6 +140,10 @@ export const ChatRoomInner = ({ code, onLobbyNotFound }: ChatRoomInnerProps) => 
     const [input, setInput] = useState('')
 
     useEffect(() => {
+        setMessages([])
+    }, [code])
+
+    useEffect(() => {
         if (chatWindow.current) {
             chatWindow.current.scrollTo({
                 left: 0,
