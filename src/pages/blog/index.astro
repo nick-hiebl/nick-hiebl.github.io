@@ -40,26 +40,25 @@ const posts = (await getCollection('blog'))
 			}
 			.title {
 				margin: 0;
-				color: rgb(var(--black));
+				color: var(--color-text-heading);
 				line-height: 1;
 				font-size: 1.1em;
 				font-weight: normal;
 			}
 			.date {
 				margin: 0;
-				color: rgb(var(--gray));
+				color: var(--color-text-subtle);
 			}
 			ul li a:hover h4 {
 				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
+			<h1>Blog</h1>
+			<p>These are some of my blog posts!</p>
 			<section>
 				<ul>
 					{

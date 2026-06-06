@@ -1,17 +1,36 @@
 import { useRef, useState, type CSSProperties } from 'react'
 
+import { getLightOrDarkMode } from '../../../components/ThemeSwitcher.tsx'
+
 import { getDailyConfig, type GameConfig } from './randomisation.ts'
 
 import './style.css'
 
-type DistanceText = 'Cold' | 'Boiling' | 'Hot' | 'Warm'
+type DistanceText = 'Cold' | 'Boiling' | 'Hot' | 'Warm' | '🎉🎉🎉'
+
+const DISTANCE_COLORS: Record<DistanceText, string> = {
+    '🎉🎉🎉': 'light-dark(#94f9ad, #009500)',
+    Cold: 'light-dark(#99bbff, #1155cc)',
+    Boiling: 'light-dark(#ff7777, #cc0000)',
+    Hot: 'light-dark(#ffaa66, #c66600)',
+    Warm: 'light-dark(#cccccc, #555555)',
+}
+
+const DISTANCE_TEXT_COLORS: Record<DistanceText, string> = {
+    '🎉🎉🎉': 'light-dark(black, white)',
+    Cold: 'light-dark(black, white)',
+    Boiling: 'light-dark(black, white)',
+    Hot: 'light-dark(black, white)',
+    Warm: 'light-dark(black, white)',
+}
+
 type DistanceColor = '#94f9ad' | '#ff7777' | '#ffaa66' | '#cccccc' | '#99bbff'
 
 type Rating = {
     value: number
     direction: '⬆️' | '⬇️' | '🎉'
     distanceText: `${'⬆️' | '⬇️'} ${DistanceText}` | '🎉🎉🎉'
-    distanceColor: DistanceColor
+    distanceValue: DistanceText
 }
 
 const rateDistance = (value: number, target: number): Rating => {
@@ -22,7 +41,7 @@ const rateDistance = (value: number, target: number): Rating => {
             value,
             direction: '🎉',
             distanceText: '🎉🎉🎉',
-            distanceColor: '#94f9ad',
+            distanceValue: '🎉🎉🎉',
         }
     }
 
@@ -48,7 +67,7 @@ const rateDistance = (value: number, target: number): Rating => {
         value,
         direction,
         distanceText: `${direction} ${distanceText}`,
-        distanceColor,
+        distanceValue: distanceText,
     }
 }
 
@@ -70,7 +89,8 @@ const drawCanvas = (canvas: HTMLCanvasElement | null, config: GameConfig) => {
     }
 
     const midpoint = Math.floor(canvas.width / 2)
-    ctx.fillStyle = 'black'
+    const lightOrDark = getLightOrDarkMode()
+    ctx.fillStyle = lightOrDark === 'light' ? 'black' : 'white'
 
     const refLength = 100
     const refLeft = midpoint - Math.ceil(refLength / 2)
@@ -88,9 +108,22 @@ const drawCanvas = (canvas: HTMLCanvasElement | null, config: GameConfig) => {
 }
 
 const Guess = (props: Rating) => {
+    const isCorrect = props.distanceValue === '🎉🎉🎉'
+    const isDarkMode = getLightOrDarkMode() === 'dark'
+
     return (
-        <li className="guess" style={{ backgroundColor: props.distanceColor }}>
-            {props.value}: {props.distanceText}
+        <li
+            className={isCorrect ? 'guess correct' : 'guess'}
+            style={{
+                backgroundColor: DISTANCE_COLORS[props.distanceValue],
+                color: DISTANCE_TEXT_COLORS[props.distanceValue],
+            }}
+        >
+            {props.value}
+            {': '}
+            <span className={isDarkMode && isCorrect ? 'emoji-deglare' : undefined}>
+                {props.distanceText}
+            </span>
         </li>
     )
 }
@@ -155,6 +188,8 @@ export const Game = () => {
 
     const [guesses, setGuesses] = useState<Rating[]>([])
 
+    const lightOrDark = getLightOrDarkMode()
+
     const onSubmitGuess = (value: number) => {
         setGuesses(current => current.concat(rateDistance(value, config.length)))
 
@@ -208,9 +243,11 @@ export const Game = () => {
                 height="120"
                 ref={canvas => drawCanvas(canvas, config)}
             />
-            <div>The black reference line above is 100 pixels long.</div>
+            <div>
+                The {lightOrDark === 'light' ? 'black' : 'white'} reference line above is 100 pixels long.
+            </div>
             <div className="flex-row">
-                Guess the length of the orange bar in pixels:
+                Guess the length of the red bar in pixels:
                 <input
                     type="text"
                     name="longie-guess"

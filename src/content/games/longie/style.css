@@ -10,8 +10,9 @@ button {
     background-color: rgb(42, 138, 234);
     color: white;
     cursor: pointer;
-    border: 1px solid black;
+    border: 1px solid var(--color-border);
     border-radius: 3px;
+    padding: 4px 8px;
 }
 
 button:hover:not(:disabled) {
@@ -53,6 +54,10 @@ canvas {
     min-width: 120px;
     padding: 6px 12px;
     border-radius: 3px;
+}
+
+.emoji-deglare {
+    text-shadow: 0px 0px 2px black, 0px 0px 4px black;
 }
 
 .post-guess-list {

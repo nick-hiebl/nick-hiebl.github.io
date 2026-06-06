@@ -1,14 +1,17 @@
 ---
+import { ThemeSwitcher } from './ThemeSwitcher'
+
 const today = new Date()
 ---
 
 <footer>
+	<ThemeSwitcher client:only />
 	&copy; {today.getFullYear()} Jumpoy. All rights reserved.
 </footer>
 <style>
 	footer {
 		padding: 2em 1em 2em 1em;
-		color: rgb(var(--gray));
+		color: var(--color-text-subtle);
 		text-align: center;
 		font-size: 0.75em;
 	}

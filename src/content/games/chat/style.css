@@ -2,8 +2,10 @@
     max-height: 80vh;
     height: 400px;
     overflow-y: scroll;
-    border: 1px solid black;
+    background-color: var(--background-surface);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
+    scrollbar-width: none;
 }
 
 .message-box ul {
@@ -13,7 +15,7 @@
 }
 
 .message[data-error=true] {
-    color: red;
+    color: var(--color-text-error);
 }
 
 .message[data-me=true] .author {
@@ -33,7 +35,7 @@
 }
 
 .input-bar {
-    border: 1px solid black;
+    border: 1px solid var(--color-border);
     height: 32px;
     padding-inline-start: 2px;
     padding-inline-end: 4px;
