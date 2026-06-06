@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+
+import { ChatRoom } from '../../content/games/chat/chat-room';
+import GameLayout from '../../layouts/Game.astro'
+
+const games = await getCollection('games')
+
+const game = games.find(game => game.data.gameId === 'chat')!
+---
+<GameLayout {...game.data}>
+	<ChatRoom client:only />
+</GameLayout>

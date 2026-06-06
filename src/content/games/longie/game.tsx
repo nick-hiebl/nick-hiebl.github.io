@@ -211,7 +211,7 @@ export const Game = () => {
     }
 
     return (
-        <section>
+        <section className="longie-main">
             <h1>Longie</h1>
             {isDone && (
                 <div className="block">
