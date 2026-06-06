@@ -9,7 +9,7 @@ import './style.css'
 type DistanceText = 'Cold' | 'Boiling' | 'Hot' | 'Warm' | '🎉🎉🎉'
 
 const DISTANCE_COLORS: Record<DistanceText, string> = {
-    '🎉🎉🎉': 'light-dark(#94f9ad, #009500)',
+    '🎉🎉🎉': 'light-dark(#94f9ad, #00b000)',
     Cold: 'light-dark(#99bbff, #1155cc)',
     Boiling: 'light-dark(#ff7777, #cc0000)',
     Hot: 'light-dark(#ffaa66, #c66600)',
@@ -17,7 +17,7 @@ const DISTANCE_COLORS: Record<DistanceText, string> = {
 }
 
 const DISTANCE_TEXT_COLORS: Record<DistanceText, string> = {
-    '🎉🎉🎉': 'light-dark(black, white)',
+    '🎉🎉🎉': 'light-dark(black, black)',
     Cold: 'light-dark(black, white)',
     Boiling: 'light-dark(black, white)',
     Hot: 'light-dark(black, white)',

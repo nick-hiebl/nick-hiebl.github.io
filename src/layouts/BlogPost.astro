@@ -32,10 +32,13 @@ const { title, description, pubDate, updatedDate, heroImage, hideDate } = Astro.
 			}
 			.prose {
 				width: 720px;
-				max-width: calc(100% - 2em);
+				max-width: 100%;
 				margin: auto;
-				padding: 1em;
+				padding-block: 1em;
 				color: var(--color-text);
+				@media (min-width: 720px) {
+					padding-inline: 1em;
+				}
 			}
 			.title {
 				margin-bottom: 1em;
