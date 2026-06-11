@@ -42,7 +42,7 @@ button.grid-cell-button[data-revealed=true] {
 
 .cell-tags {
     position: absolute;
-    z-index: 100;
+    z-index: 0.5;
     top: -4px;
     left: 4px;
     font-size: 0.5em;

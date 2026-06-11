@@ -1,5 +1,5 @@
 body {
-    background-color: light-dark(#cef8, #123);
+    background-color: light-dark(#E0F0F9, #123);
 
     --player-background: light-dark(#fce, #813);
     --info-background: light-dark(rgb(164, 229, 255), rgb(0, 141, 156));

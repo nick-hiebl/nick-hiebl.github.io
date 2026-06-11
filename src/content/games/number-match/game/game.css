@@ -1,5 +1,7 @@
 body {
-    --player-background: light-dark(#fce, #813);
+    background-color: light-dark(var(--B200), var(--B900));
+    color: light-dark(var(--N999), var(--N0));
+    --player-background: light-dark(var(--p200), var(--p800));
 }
 
 ul {
@@ -26,6 +28,6 @@ ul {
     text-align: center;
     justify-content: center;
     align-items: center;
-    background-color: var(--background-surface-emphasis);
+    background-color: light-dark(var(--B400), var(--B700));
     height: 38px;
 }

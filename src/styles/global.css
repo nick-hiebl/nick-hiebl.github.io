@@ -1,10 +1,88 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+/**
+ * This color palette was generated with the assistance of accessiblepalette.com.
+ *
+ * https://accessiblepalette.com/?shades=50,100,200,300,400,500,600,700,800,900&lightness=98.2,93.95,85.1,76.5,67.65,57.8,47.6,40.4,32.4,23.55&f15c50=0,0&f8d147=0,-10&56d25b=0,0&0088cb=0,0&387AE6=1,45&ff6aaf=0,0&808080=0,0
  */
-
 :root {
+	--R050: #FEF9F8;
+	--R100: #FDE9E8;
+	--R200: #FAC9C5;
+	--R300: #F8A9A2;
+	--R400: #F8A9A2;
+	--R500: #EC5A4E;
+	--R600: #C14A40;
+	--R700: #A33E36;
+	--R800: #83322B;
+	--R900: #612520;
+
+	--Y050: #FFFAEB;
+	--Y100: #FEEDB9;
+	--Y200: #FECF49;
+	--Y300: #E3B740;
+	--Y400: #C89F38;
+	--Y500: #AA8630;
+	--Y600: #8B6C27;
+	--Y700: #765B21;
+	--Y800: #60491B;
+	--Y900: #473514;
+
+	--G050: #F4FCF4;
+	--G100: #D9F5DA;
+	--G200: #9FE5A2;
+	--G300: #5FD564;
+	--G400: #4CBB51;
+	--G500: #409D44;
+	--G600: #348037;
+	--G700: #2C6C2F;
+	--G800: #235726;
+	--G900: #1A401C;
+
+	--B050: #F6FBFD;
+	--B100: #E0F0F9;
+	--B200: #B1DBEF;
+	--B300: #84C5E6;
+	--B400: #53AFDC;
+	--B500: #1993D0;
+	--B600: #0077B2;
+	--B700: #006596;
+	--B800: #005179;
+	--B900: #003C5A;
+
+	--P050: #F9F9FE;
+	--P100: #EDECFC;
+	--P200: #D7D0F5;
+	--P300: #C5B4ED;
+	--P400: #B597E2;
+	--P500: #A775D4;
+	--P600: #9457B4;
+	--P700: #834892;
+	--P800: #6D386F;
+	--P900: #522A4E;
+
+	--p050: #FFF8FB;
+	--p100: #FFE8F2;
+	--p200: #FFC4DF;
+	--p300: #FFA0CC;
+	--p400: #FF76B5;
+	--p500: #DF5D99;
+	--p600: #B64C7D;
+	--p700: #9A4069;
+	--p800: #7B3355;
+	--p900: #5B263F;
+
+	--N0: #FFFFFF;
+	--N050: #FAFAFA;
+	--N100: #EEEEEE;
+	--N200: #D5D5D5;
+	--N300: #BDBDBD;
+	--N400: #A5A5A5;
+	--N500: #8B8B8B;
+	--N600: #717171;
+	--N700: #5F5F5F;
+	--N800: #4C4C4C;
+	--N900: #383838;
+	--N999: #000000;
+
 	--background: light-dark(#ffffff, #000000);
 	--background-surface: light-dark(#ffffff, #222222);
 	--background-surface-emphasis: light-dark(#ccc, #444);
