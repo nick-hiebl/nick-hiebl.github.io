@@ -3,7 +3,9 @@
 }
 
 table.grid {
-    border: 1px solid var(--color-border);
+    background-color: light-dark(var(--Y100), var(--Y800));
+    padding: 4px;
+    border-radius: 4px;
     table-layout: fixed;
     display: grid;
 }
@@ -26,18 +28,21 @@ button.grid-cell-button {
     cursor: pointer;
     border: none;
     padding: 0;
+    border-radius: 2px;
+    background-color: light-dark(var(--Y300), var(--Y600));
 }
 
 button.grid-cell-button:hover {
-    background-color: var(--accent);
+    background-color: light-dark(var(--B200), var(--B600));
 }
 
 button.grid-cell-button[aria-selected=true] {
-    border: 2px solid red;
+    border: 2px solid light-dark(var(--R600), var(--R400));
 }
 
 button.grid-cell-button[data-revealed=true] {
-    background-color: var(--background-surface-emphasis);
+    background-color: light-dark(var(--G300), var(--G600));
+    cursor: default;
 }
 
 .cell-tags {

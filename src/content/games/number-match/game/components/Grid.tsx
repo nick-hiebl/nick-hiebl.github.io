@@ -25,6 +25,10 @@ export const Grid = ({ grid, hideName, onSelectCoordinate, selectedCoordinate }:
                     {grid.values.map((row, rowIndex) => (
                         <tr key={rowIndex} className="grid-row">
                             {row.map((cell, columnIndex) => {
+                                if (cell.empty) {
+                                    return <td key={columnIndex} />
+                                }
+
                                 const isSelected = selectedCoordinate &&
                                     selectedCoordinate.gridId === grid.id &&
                                     selectedCoordinate.column === columnIndex &&

@@ -74,6 +74,7 @@ export type OutputGridValue = {
     value: number | undefined
     revealed: boolean
     tags: Tag[]
+    empty?: boolean
 }
 
 export type OutputGrid = Omit<Grid, 'values'> & {
