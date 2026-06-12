@@ -28,6 +28,6 @@ ul {
     text-align: center;
     justify-content: center;
     align-items: center;
-    background-color: light-dark(var(--B400), var(--B700));
+    background-color: light-dark(var(--B300), var(--B700));
     height: 38px;
 }

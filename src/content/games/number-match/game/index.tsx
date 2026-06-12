@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import { useSocket } from '../../../../components/games/common/socket'
-import { Menu, MenuTrigger } from '../../../../components/games/common/Menu'
+import { MenuTrigger } from '../../../../components/games/common/Menu'
 
 // import { StatusMenu } from './components/StatusMenu'
 import { NUMBER_MATCH_PASSWORD } from './constants'
 import { GameContext } from './context'
 import type { GameStateOutput } from './types'
+import { formatData } from './utils/format-data'
 import { Pending } from './views/Pending'
 import { ActiveGame } from './views/ActiveGame'
 import { CompleteGame } from './views/CompleteGame'
@@ -39,7 +40,7 @@ export const NumberMatchGame = ({ code, onLobbyNotFound }: GameProps) => {
         }
 
         const onGameState = (data: GameStateOutput) => {
-            setState(data)
+            setState(formatData(data))
             localStorage.setItem(NUMBER_MATCH_PASSWORD, data.password)
         }
 
@@ -101,7 +102,6 @@ export const NumberMatchGame = ({ code, onLobbyNotFound }: GameProps) => {
                     <div>
                         <h1>{code}</h1>
                         <pre>{JSON.stringify(stateWithoutPlayers, null, 2)}</pre>
-                        {/* <pre>{JSON.stringify(settings, null, 2)}</pre> */}
                     </div>
                 )}
             </section>

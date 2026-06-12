@@ -24,7 +24,7 @@ export const ValueDetails = ({ state }: Props) => {
     const { grids, valueDetails } = state
 
     const details = useMemo(() => {
-        return valueDetails.map(({ value, totalCount }) => {
+        return valueDetails.map(({ value, totalCount, isRed, isYellow }) => {
             const revealed = countValueAmongGrids(value, grids, true)
             const mine = countValueAmongGrids(value, grids.filter(grid => grid.ownerId === yourId), false)
             return {
@@ -32,6 +32,8 @@ export const ValueDetails = ({ state }: Props) => {
                 totalCount,
                 revealed,
                 mine,
+                isRed,
+                isYellow,
             }
         })
     }, [grids, valueDetails])
@@ -45,10 +47,18 @@ export const ValueDetails = ({ state }: Props) => {
             <ul>
                 {details.map(value => (
                     <li key={value.value}>
-                        <div className="value-detail">
-                            <h3 className="value-title" data-complete={value.revealed === value.totalCount}>
-                                {value.value.toString()}
-                            </h3>
+                        <div className="value-detail" data-color={value.isRed ? 'red' : value.isYellow ? 'yellow' : undefined}>
+                            <div className="value-title-row">
+                                <h3 className="value-title" data-complete={value.revealed === value.totalCount}>
+                                    {value.value.toString()}
+                                </h3>
+                                {value.isRed && (
+                                    <span className="detail-bubble red" />
+                                )}
+                                {value.isYellow && (
+                                    <span className="detail-bubble yellow" />
+                                )}
+                            </div>
                             <div>Count: {value.revealed} / {value.totalCount}</div>
                             {value.revealed < value.totalCount && value.mine > 0 && value.mine + value.revealed === value.totalCount && (
                                 <button

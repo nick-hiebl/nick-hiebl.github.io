@@ -14,7 +14,15 @@ export const PlayerList = ({ extraContent }: PlayerListProps) => {
             {output.players.map((player) => {
                 return (
                     <div key={player.id} className="player-item">
-                        <span>{player.name}</span>
+                        <span>
+                            {player.name}
+                            {output.yourId === player.id && (
+                                <>
+                                    {' '}
+                                    (You)
+                                </>
+                            )}
+                        </span>
                         <div className="player-tag-list">
                             {extraContent ? extraContent(player.id) : (
                                 <ReadyNode playerId={player.id} />

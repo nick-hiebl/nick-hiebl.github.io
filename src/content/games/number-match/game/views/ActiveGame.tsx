@@ -29,12 +29,36 @@ export const ActiveGame = ({ state }: Props) => {
 
     return (
         <div className="stack gap-8px">
-            <PlayerList />
+            <PlayerList
+                extraContent={playerId => {
+                    if (actionType === 'claim' && state.action.users.includes(playerId)) {
+                        return <span>🤔</span>
+                    } else if (actionType === 'guess' && state.action.user === playerId) {
+                        return <span>🔎</span>
+                    } else if (actionType === 'tag' && state.action.users.includes(playerId)) {
+                        return <span>❓</span>
+                    }
+                }}
+            />
             <h1>Active</h1>
             <ValueDetails state={state} />
             <div className="stack gap-16px">
                 <div>
                     Errors: {state.errors}, Actions
+                    {actionType === 'tag' && isMyAction && (
+                        <button
+                            disabled={!myCoord}
+                            onClick={() => {
+                                if (!myCoord) {
+                                    return
+                                }
+
+                                socket.emit('tagCell', { coordinate: myCoord })
+                            }}
+                        >
+                            Submit tag
+                        </button>
+                    )}
                     {actionType === 'guess' && isMyAction && (
                         <button
                             disabled={!myCoord || !otherCoord}
@@ -67,6 +91,15 @@ export const ActiveGame = ({ state }: Props) => {
                     <ul>
                         {state.grids.filter(grid => grid.ownerId !== yourId).map(grid => (
                             <li key={grid.id}>
+                                {grid.ownerId === '' && actionType === 'claim' && state.action.users.includes(yourId) && (
+                                    <button
+                                        onClick={() => {
+                                            socket.emit('claimGrid', { gridId: grid.id })
+                                        }}
+                                    >
+                                        Claim
+                                    </button>
+                                )}
                                 <Grid
                                     grid={grid}
                                     onSelectCoordinate={coord => setOtherCoord(coord)}

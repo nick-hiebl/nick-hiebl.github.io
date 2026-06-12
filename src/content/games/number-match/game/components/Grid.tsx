@@ -18,7 +18,7 @@ export const Grid = ({ grid, hideName, onSelectCoordinate, selectedCoordinate }:
     return (
         <div className="grid-container">
             {!hideName && (
-                <div>Owner: {players.find(p => p.id === grid.ownerId)?.name ?? 'Unknown owner'}</div>
+                <div>Owner: {!grid.ownerId ? 'Unassigned' : players.find(p => p.id === grid.ownerId)?.name ?? 'Unknown owner'}</div>
             )}
             <table className="grid">
                 <tbody>
@@ -50,18 +50,10 @@ export const Grid = ({ grid, hideName, onSelectCoordinate, selectedCoordinate }:
                                                     column: columnIndex,
                                                 }
 
-                                                if (state.state !== 'active') {
-                                                    return
-                                                }
-
-                                                if (isYourGrid && state.action.type === 'tag' && state.action.users.includes(yourId)) {
-                                                    socket.emit('tagCell', { coordinate })
-                                                } else if (state.action.type === 'guess' && state.action.user === yourId) {
-                                                    if (isSelected) {
-                                                        onSelectCoordinate?.(undefined)
-                                                    } else if (!cell.revealed) {
-                                                        onSelectCoordinate?.(coordinate)
-                                                    }
+                                                if (isSelected) {
+                                                    onSelectCoordinate?.(undefined)
+                                                } else {
+                                                    onSelectCoordinate?.(coordinate)
                                                 }
                                             }}
                                         >

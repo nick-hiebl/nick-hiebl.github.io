@@ -2,10 +2,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: light-dark(var(--Y100), var(--Y800));
+    background-color: light-dark(var(--G200), var(--G800));
     color: light-dark(var(--N900), var(--N100));
     padding: 4px;
     border-radius: 8px;
+}
+
+.value-detail[data-color="red"] {
+    background-color: light-dark(var(--R200), var(--R800));
+}
+
+.value-detail[data-color="yellow"] {
+    background-color: light-dark(var(--Y200), var(--Y800));
+}
+
+.value-title-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
 }
 
 .value-title {
@@ -15,4 +30,15 @@
 .value-title[data-complete=true] {
     text-decoration: line-through;
     color: light-dark(var(--N700), var(--N300));
+}
+
+.detail-bubble {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+}
+
+.detail-bubble.red {
+    background-color: light-dark(var(--R500), var(--R500));
 }

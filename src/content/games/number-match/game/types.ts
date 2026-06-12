@@ -38,6 +38,8 @@ export type Grid = {
 export type ValueDetails = {
     value: number
     totalCount: number
+    isYellow?: boolean
+    isRed?: boolean
 }
 
 export type PendingGameState = {
@@ -53,6 +55,12 @@ export type CurrentAction =
     | {
         type: 'guess'
         user: string
+    }
+    | {
+        type: 'claim'
+        users: string[]
+        min: number
+        max: number
     }
 
 export type GameState = {
@@ -125,4 +133,11 @@ export type GuessAction = {
 
 export type RevealAllAction = {
     value: number
+}
+
+export type GameSettings = {
+    numGrids: number
+    autoAssignGrids: boolean
+    gridHeight: number
+    valueDetails: ValueDetails[]
 }
