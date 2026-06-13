@@ -6,6 +6,7 @@
     color: light-dark(var(--N900), var(--N100));
     padding: 4px;
     border-radius: 8px;
+    border: 1px solid light-dark(var(--N0), transparent);
 }
 
 .value-detail[data-color="red"] {
