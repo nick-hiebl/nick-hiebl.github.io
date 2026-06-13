@@ -122,6 +122,9 @@ export const ValueDetails = ({ state }: Props) => {
         state.action.type === 'guess' &&
         state.action.user === yourId
 
+    const sumYellows = valueDetails.reduce((sum, value) => value.isYellow ? sum + value.totalCount : sum, 0)
+    const sumReds = valueDetails.reduce((sum, value) => value.isRed ? sum + value.totalCount : sum, 0)
+
     return (
         <div className="gap-8px">
             <ul>
@@ -139,7 +142,7 @@ export const ValueDetails = ({ state }: Props) => {
                                     <span className="detail-bubble yellow" />
                                 )}
                             </div>
-                            <div>Count: {value.revealed} / {value.totalCount}</div>
+                            <div>{value.revealed} / {value.totalCount}</div>
                             {value.canReveal && (
                                 <button
                                     onClick={() => {
@@ -160,6 +163,12 @@ export const ValueDetails = ({ state }: Props) => {
                     </li>
                 ))}
             </ul>
+            {totalYellows < sumYellows && (
+                <div>Only {totalYellows} of {sumYellows} yellows are actually present.</div>
+            )}
+            {totalReds < sumReds && (
+                <div>Only {totalReds} of {sumReds} reds are actually present.</div>
+            )}
         </div>
     )
 }

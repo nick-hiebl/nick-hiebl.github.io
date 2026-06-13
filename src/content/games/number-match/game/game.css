@@ -31,3 +31,9 @@ ul {
     background-color: light-dark(var(--B300), var(--B700));
     height: 38px;
 }
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

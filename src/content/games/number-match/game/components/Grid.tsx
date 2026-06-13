@@ -14,7 +14,9 @@ type Props = {
 }
 
 export const Grid = ({ grid, hideName, onSelectCoordinate, isCellInteractive, selectedCoordinate }: Props) => {
-    const { output: { players } } = useGameContext()
+    const { output: { players, state } } = useGameContext()
+
+    const valueDetails = state.state === 'pending' ? [] : state.valueDetails
 
     return (
         <div className="grid-container">
@@ -34,6 +36,11 @@ export const Grid = ({ grid, hideName, onSelectCoordinate, isCellInteractive, se
                                     selectedCoordinate.gridId === grid.id &&
                                     selectedCoordinate.column === columnIndex &&
                                     selectedCoordinate.row === rowIndex
+
+                                const isYellow = (cell.value != undefined &&
+                                    valueDetails.find(v => v.value === cell.value)?.isYellow) ?? false
+                                const isRed = (cell.value != undefined &&
+                                    valueDetails.find(v => v.value === cell.value)?.isRed) ?? false
 
                                 return (
                                     <td
@@ -60,6 +67,8 @@ export const Grid = ({ grid, hideName, onSelectCoordinate, isCellInteractive, se
                                             }}
                                         >
                                             {cell.value ?? '?'}
+                                            {isYellow && <span className="tag-bubble yellow non-inverse" />}
+                                            {isRed && <span className="tag-bubble red non-inverse" />}
                                         </button>
                                         <Tags tags={cell.tags} />
                                     </td>

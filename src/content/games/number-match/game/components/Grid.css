@@ -3,7 +3,7 @@
 }
 
 table.grid {
-    background-color: light-dark(var(--Y100), var(--Y800));
+    background-color: light-dark(var(--N100), var(--N800));
     padding: 4px;
     border-radius: 4px;
     table-layout: fixed;
@@ -28,7 +28,11 @@ button.grid-cell-button {
     border: none;
     padding: 0;
     border-radius: 2px;
-    background-color: light-dark(var(--Y300), var(--Y600));
+    background-color: light-dark(var(--N300), var(--N600));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 button.grid-cell-button:not(:disabled) {
@@ -74,9 +78,17 @@ button.grid-cell-button[data-revealed=true] {
     border-width: 1px;
     border-style: solid;
     border-color: transparent;
+    border-color: light-dark(transparent, var(--N999));
+}
+
+.tag-bubble.non-inverse {
+    border-color: light-dark(var(--N999), var(--N050));
 }
 
 .tag-bubble.yellow {
-    border-color: light-dark(transparent, var(--N999));
     background-color: light-dark(var(--Y200), var(--Y300));
+}
+
+.tag-bubble.red {
+    background-color: light-dark(var(--R500), var(--R600));
 }

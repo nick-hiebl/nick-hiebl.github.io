@@ -91,7 +91,7 @@ export const ActiveGame = ({ state }: Props) => {
                     <div>Others' grids</div>
                     <ul>
                         {state.grids.filter(grid => grid.ownerId !== yourId).map(grid => (
-                            <li key={grid.id}>
+                            <li key={grid.id} className="column flex-center">
                                 {grid.ownerId === '' && actionType === 'claim' && state.action.users.includes(yourId) && (
                                     <button
                                         onClick={() => {
