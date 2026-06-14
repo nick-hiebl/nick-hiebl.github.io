@@ -1,0 +1,3 @@
+.error {
+    color: light-dark(var(--R700), var(--R400));
+}

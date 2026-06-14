@@ -37,3 +37,29 @@ ul {
     flex-direction: column;
     align-items: center;
 }
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex-start {
+    align-items: flex-start;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.big-text {
+    font-size: 2em;
+}
+
+.gap-8px {
+    gap: 8px;
+}
+
+.gap-16px {
+    gap: 16px;
+}

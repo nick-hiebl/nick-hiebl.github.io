@@ -9,14 +9,14 @@ type Props = {
 }
 
 export const CompleteGame = ({ state }: Props) => {
-    const { output: { yourId } } = useGameContext()
+    const { output: { hostPlayerId, yourId }, socket } = useGameContext()
 
     return (
         <div className="stack gap-8px">
             <PlayerList />
             <h1>Complete</h1>
             <ValueDetails state={state} />
-            <div className="stack gap-16px">
+            <div className="stack gap-16px full-width">
                 <div>
                     Errors: {state.errors}, Actions
                 </div>
@@ -38,6 +38,20 @@ export const CompleteGame = ({ state }: Props) => {
                         ))}
                     </ul>
                 </div>
+                {hostPlayerId === yourId && (
+                    <>
+                        <br />
+                        <div>
+                            <button
+                                onClick={() => {
+                                    socket.emit('resetRound')
+                                }}
+                            >
+                                Play again
+                            </button>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     )

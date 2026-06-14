@@ -219,6 +219,7 @@ interface NumberProps {
     onChange: (value: number, increase: boolean) => void
 }
 
+// Replace with common component
 const IncDecNumber = (props: NumberProps) => {
     const canDecrement = props.min === undefined || props.value <= props.min
     const canIncrement = props.max === undefined || props.value >= props.max

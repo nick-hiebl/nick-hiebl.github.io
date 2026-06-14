@@ -5,8 +5,8 @@ import { MenuTrigger } from '../../../../components/games/common/Menu'
 
 // import { StatusMenu } from './components/StatusMenu'
 import { NUMBER_MATCH_PASSWORD } from './constants'
-import { GameContext } from './context'
-import type { GameStateOutput } from './types'
+import { GameContext, useGameContext } from './context'
+import type { GameSettings, GameStateOutput } from './types'
 import { formatData } from './utils/format-data'
 import { Pending } from './views/Pending'
 import { ActiveGame } from './views/ActiveGame'
@@ -32,7 +32,7 @@ export const NumberMatchGame = ({ code, onLobbyNotFound }: GameProps) => {
 
     const socket = useSocket(token, code)
     const [state, setState] = useState<GameStateOutput | undefined>()
-    // const [settings, setGameSettings] = useState<GameSettings | undefined>()
+    const [settings, setGameSettings] = useState<GameSettings | undefined>()
 
     useEffect(() => {
         if (!socket) {
@@ -44,18 +44,18 @@ export const NumberMatchGame = ({ code, onLobbyNotFound }: GameProps) => {
             localStorage.setItem(NUMBER_MATCH_PASSWORD, data.password)
         }
 
-        // const onGameSettings = (data: GameSettings) => {
-        //     setGameSettings(data)
-        // }
+        const onGameSettings = (data: GameSettings) => {
+            setGameSettings(data)
+        }
 
         socket.on('gameState', onGameState)
-        // socket.on('gameSettings', onGameSettings)
+        socket.on('gameSettings', onGameSettings)
 
         socket.on('not-found', onLobbyNotFound)
 
         return () => {
             socket.off('gameState', onGameState)
-            // socket.off('gameSettings', onGameSettings)
+            socket.off('gameSettings', onGameSettings)
 
             socket.off('not-found', onLobbyNotFound)
         }
@@ -74,7 +74,7 @@ export const NumberMatchGame = ({ code, onLobbyNotFound }: GameProps) => {
         return (
             <section>
                 <h1>Loading...</h1>
-                <p>Ideally you should not be seeing this for long...</p>
+                <p>Ideally you should not be seeing this for long... NOSTATE</p>
             </section>
         )
     }
@@ -82,15 +82,19 @@ export const NumberMatchGame = ({ code, onLobbyNotFound }: GameProps) => {
     const { players, ...stateWithoutPlayers } = state
 
     return (
-        <GameContext.Provider value={{ output: state, socket }}>
+        <GameContext.Provider value={{ output: state, settings, socket }}>
             <section>
                 <div id="top-bar">
                     <div id="core-bar">
                         Number match game ({code})
                     </div>
-                    <MenuTrigger>
-                        <h1>Menu!</h1>
-                    </MenuTrigger>
+                    {state.hostPlayerId === state.yourId && (
+                        <MenuTrigger>
+                            {({ onClose }) => (
+                                <MenuContents onClose={onClose} />
+                            )}
+                        </MenuTrigger>
+                    )}
                 </div>
                 {state.state.state === 'pending' ? (
                     <Pending code={code} />
@@ -106,5 +110,32 @@ export const NumberMatchGame = ({ code, onLobbyNotFound }: GameProps) => {
                 )}
             </section>
         </GameContext.Provider>
+    )
+}
+
+type MenuContentsProps = {
+    onClose: () => void
+}
+
+const MenuContents = ({ onClose }: MenuContentsProps) => {
+    const { output, socket } = useGameContext()
+
+    return (
+        <div>
+            <h1>Menu!</h1>
+            {output.hostPlayerId === output.yourId && (
+                <div>
+                    <div>Fully reset the game? Warning, this will happen immediately.</div>
+                    <button
+                        onClick={() => {
+                            socket.emit('resetRound')
+                            onClose()
+                        }}
+                    >
+                        Reset round
+                    </button>
+                </div>
+            )}
+        </div>
     )
 }

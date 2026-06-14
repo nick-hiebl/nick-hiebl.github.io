@@ -36,7 +36,7 @@ export const Menu = ({ children, isOpen, onClose }: MenuProps) => {
 }
 
 type Props = {
-    children: ReactNode
+    children: ReactNode | ((controls: { onClose: () => void }) => ReactNode)
 }
 
 export const MenuTrigger = ({ children }: Props) => {
@@ -46,7 +46,9 @@ export const MenuTrigger = ({ children }: Props) => {
         <>
             <button id="menu-trigger" onClick={() => setMenuOpen(current => !current)}>☰</button>
             <Menu isOpen={isMenuOpen} onClose={() => setMenuOpen(false)}>
-                {children}
+                {typeof children === 'function' ? (
+                    children({ onClose: () => setMenuOpen(false) })
+                ) : children}
             </Menu>
         </>
     )

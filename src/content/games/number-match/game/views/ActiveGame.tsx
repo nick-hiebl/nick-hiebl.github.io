@@ -42,7 +42,7 @@ export const ActiveGame = ({ state }: Props) => {
             />
             <h1>Active</h1>
             <ValueDetails state={state} />
-            <div className="stack gap-16px">
+            <div className="stack gap-16px full-width">
                 <div>
                     Errors: {state.errors}, Actions
                     {actionType === 'tag' && isMyAction && (
@@ -74,7 +74,7 @@ export const ActiveGame = ({ state }: Props) => {
                     )}
                 </div>
                 <div className="stack stack-center gap-8px">
-                    <div>Your grids</div>
+                    <h3>Your grids</h3>
                     <ul>
                         {state.grids.filter(grid => grid.ownerId === yourId).map(grid => (
                             <li key={grid.id}>
@@ -88,7 +88,7 @@ export const ActiveGame = ({ state }: Props) => {
                             </li>
                         ))}
                     </ul>
-                    <div>Others' grids</div>
+                    <h3>Others' grids</h3>
                     <ul>
                         {state.grids.filter(grid => grid.ownerId !== yourId).map(grid => (
                             <li key={grid.id} className="column flex-center">

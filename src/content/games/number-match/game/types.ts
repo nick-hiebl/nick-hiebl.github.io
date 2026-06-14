@@ -161,7 +161,8 @@ export type GameSettings = {
     numGrids: number
     autoAssignGrids: boolean
     gridHeight: number
-    valueDetails: ValueDetails[]
+    maxValue: number
+    duplicates: number
     totalReds: number
     extraReds: number
     totalYellows: number
